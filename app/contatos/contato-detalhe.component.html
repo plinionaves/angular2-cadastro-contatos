@@ -1,0 +1,45 @@
+<div class="container">
+
+    <h2>Salvar contato</h2>
+
+    <form (ngSubmit)="onSubmit()" #contatoForm="ngForm" novalidate>
+
+        <div [ngClass]="getFormGroupClass(nome.valid, nome.pristine)">
+            <label for="nome" class="form-control-label">Nome</label>
+            <input type="text" placeholder="Insira o nome"
+                [ngClass]="getFormControlClass(nome.valid, nome.pristine)"
+                required
+                #nome="ngModel"
+                name="nome"
+                [(ngModel)]="contato.nome">
+            <div class="form-control-feedback" [hidden]="nome.valid || nome.pristine">O campo nome é obrigatório!</div>
+        </div>
+
+        <div [ngClass]="getFormGroupClass(email.valid, email.pristine)">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" placeholder="Insira o email"
+                [ngClass]="getFormControlClass(email.valid, email.pristine)"
+                required
+                #email="ngModel"
+                name="email"
+                [(ngModel)]="contato.email">
+            <div class="form-control-feedback" [hidden]="email.valid || email.pristine">O campo email é obrigatório!</div>
+        </div>
+
+        <div [ngClass]="getFormGroupClass(telefone.valid, telefone.pristine)">
+            <label for="telefone">Telefone</label>
+            <input type="text" class="form-control" placeholder="Insira o telefone"
+                [ngClass]="getFormControlClass(telefone.valid, telefone.pristine)"
+                required
+                #telefone="ngModel"
+                name="telefone"
+                [(ngModel)]="contato.telefone">
+            <div class="form-control-feedback" [hidden]="telefone.valid || telefone.pristine">O campo telefone é obrigatório!</div>
+        </div>
+
+        <button type="submit" class="btn btn-success" [disabled]="!contatoForm.form.valid">Salvar</button>
+        <a class="btn btn-secondary" (click)="goBack()">Voltar</a>
+
+    </form>
+
+</div>
