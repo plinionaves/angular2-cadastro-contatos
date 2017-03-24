@@ -8,86 +8,84 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var http_1 = require('@angular/http');
-require('rxjs/add/operator/toPromise');
-var ContatoService = (function () {
-    function ContatoService(http) {
+const core_1 = require("@angular/core");
+const http_1 = require("@angular/http");
+require("rxjs/add/operator/toPromise");
+let ContatoService = class ContatoService {
+    constructor(http) {
         this.http = http;
         this.contatosUrl = 'app/contatos';
         this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
     }
-    ContatoService.prototype.findAll = function () {
+    findAll() {
         return this.http.get(this.contatosUrl)
             .toPromise()
-            .then(function (response) { return response.json().data; })
+            .then(response => response.json().data)
             .catch(this.handleError);
-    };
-    ContatoService.prototype.find = function (id) {
+    }
+    find(id) {
         return this.findAll()
-            .then(function (contatos) { return contatos.find(function (contato) { return contato.id === id; }); });
-    };
-    ContatoService.prototype.create = function (contato) {
+            .then((contatos) => contatos.find(contato => contato.id === id));
+    }
+    create(contato) {
         return this.http
             .post(this.contatosUrl, JSON.stringify(contato), { headers: this.headers })
             .toPromise()
-            .then(function (response) { return response.json().data; })
+            .then((response) => response.json().data)
             .catch(this.handleError);
-    };
-    ContatoService.prototype.update = function (contato) {
-        var url = this.contatosUrl + "/" + contato.id; // app/contatos/:id
+    }
+    update(contato) {
+        const url = `${this.contatosUrl}/${contato.id}`; // app/contatos/:id
         return this.http
             .put(url, JSON.stringify(contato), { headers: this.headers })
             .toPromise()
-            .then(function () { return contato; })
+            .then(() => contato)
             .catch(this.handleError);
-    };
-    ContatoService.prototype.delete = function (contato) {
-        var url = this.contatosUrl + "/" + contato.id; // app/contatos/:id
+    }
+    delete(contato) {
+        const url = `${this.contatosUrl}/${contato.id}`; // app/contatos/:id
         return this.http
             .delete(url, { headers: this.headers })
             .toPromise()
-            .then(function () { return contato; })
+            .then(() => contato)
             .catch(this.handleError);
-    };
-    ContatoService.prototype.handleError = function (err) {
+    }
+    handleError(err) {
         console.log('Error: ', err);
         return Promise.reject(err.message || err);
-    };
-    ContatoService.prototype.getContatosSlowly = function () {
-        var _this = this;
-        return new Promise(function (resolve, reject) {
+    }
+    getContatosSlowly() {
+        return new Promise((resolve, reject) => {
             setTimeout(resolve, 2000);
         })
-            .then(function () {
+            .then(() => {
             console.log('primeiro then');
             return 'Curso Angular 2 Plínio Naves';
         })
-            .then(function (param) {
+            .then((param) => {
             console.log('segundo then');
             console.log(param);
-            return new Promise(function (resolve2, reject2) {
-                setTimeout(function () {
+            return new Promise((resolve2, reject2) => {
+                setTimeout(() => {
                     console.log('continuando depois de 4 segundos...');
                     resolve2();
                 }, 4000);
             });
         })
-            .then(function () {
+            .then(() => {
             console.log('terceiro then');
-            return _this.findAll();
+            return this.findAll();
         });
-    };
-    ContatoService.prototype.search = function (term) {
+    }
+    search(term) {
         return this.http
-            .get(this.contatosUrl + "/?nome=" + term)
-            .map(function (res) { return res.json().data; });
-    };
-    ContatoService = __decorate([
-        core_1.Injectable(), 
-        __metadata('design:paramtypes', [http_1.Http])
-    ], ContatoService);
-    return ContatoService;
-}());
+            .get(`${this.contatosUrl}/?nome=${term}`)
+            .map((res) => res.json().data);
+    }
+};
+ContatoService = __decorate([
+    core_1.Injectable(),
+    __metadata("design:paramtypes", [http_1.Http])
+], ContatoService);
 exports.ContatoService = ContatoService;
 //# sourceMappingURL=contato.service.js.map
