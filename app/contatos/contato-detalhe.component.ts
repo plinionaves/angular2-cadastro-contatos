@@ -22,7 +22,7 @@ export class ContatoDetalheComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.contato = new Contato(0, '', '', '');
+        this.contato = new Contato('', '', '');
 
         this.route.params.forEach((params: Params) => {
             let id: number = +params['id'];
@@ -57,7 +57,7 @@ export class ContatoDetalheComponent implements OnInit {
     }
 
     onSubmit(): void {
-        let promise;
+        let promise: Promise<Contato>;
         
         if (this.isNew) {
             console.log('cadastrar contato');

@@ -21,7 +21,7 @@ let ContatoDetalheComponent = class ContatoDetalheComponent {
         this.isNew = true;
     }
     ngOnInit() {
-        this.contato = new contato_model_1.Contato(0, '', '', '');
+        this.contato = new contato_model_1.Contato('', '', '');
         this.route.params.forEach((params) => {
             let id = +params['id'];
             if (id) {
